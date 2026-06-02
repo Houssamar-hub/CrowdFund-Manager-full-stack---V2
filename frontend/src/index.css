@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #f5f5f5;
+}
+
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #f1f1f1;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo h1 {
+  font-size: 38px;
+  font-weight: 700;
+  color: #111;
+}
+
+.logo p {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.nav-links {
+  margin-top: 55px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-item svg {
+  font-size: 20px;
+}
+
+.nav-item.active {
+  background: #111;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-item:hover {
+  background: #ddd;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.profile h4 {
+  font-size: 15px;
+  color: #222;
+}
+
+.profile p {
+  font-size: 13px;
+  color: #999;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  background: transparent;
+  font-size: 17px;
+  color: #333;
+  cursor: pointer;
+}
+
+.logout-btn svg {
+  font-size: 20px;
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+}
