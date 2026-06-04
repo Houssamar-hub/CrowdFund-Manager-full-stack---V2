@@ -14,12 +14,12 @@ import {
 const router = Router();
 
 // Routes CRUD pour les projets
-router.post("/", protect,authorizeRoles("owner"), createProject);           // POST /projects - Créer un projet
-router.get("/mine", protect,authorizeRoles("owner"), getMyProjects);        // GET /projects/mine - Mes projets
-router.get("/open", protect, getOpenProjects);                              // GET /projects/open - Projets ouverts
-router.get("/:id", protect, authorizeRoles("owner"),getProjectById);        // GET /projects/:id - Détail projet
-router.put("/:id", protect,authorizeRoles("owner"), updateProject);         // PUT /projects/:id - Modifier projet
-router.patch("/:id/close", authorizeRoles("owner"),protect, closeProject);  // PATCH /projects/:id/close - Fermer projet
-router.delete("/:id",authorizeRoles("owner"), protect, deleteProject);      // DELETE /projects/:id - Supprimer projet
+router.post("/", protect, authorizeRoles("owner"), createProject); // POST /projects - Créer un projet
+router.get("/mine", protect, authorizeRoles("owner"), getMyProjects); // GET /projects/mine - Mes projets
+router.get("/open", protect, getOpenProjects); // GET /projects/open - Projets ouverts
+router.get("/:id", protect, getProjectById); // GET /projects/:id - Détail projet
+router.put("/:id", protect, authorizeRoles("owner"), updateProject); // PUT /projects/:id - Modifier projet
+router.patch("/:id/close", authorizeRoles("owner"), protect, closeProject); // PATCH /projects/:id/close - Fermer projet
+router.delete("/:id", authorizeRoles("owner"), protect, deleteProject); // DELETE /projects/:id - Supprimer projet
 
 export default router;
