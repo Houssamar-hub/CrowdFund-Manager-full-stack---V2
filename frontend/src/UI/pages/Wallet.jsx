@@ -2,7 +2,6 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { deposit } from "../../store/slices/walletSlice";
 
 function Wallet() {
   const dispatch = useDispatch();

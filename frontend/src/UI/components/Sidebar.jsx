@@ -59,13 +59,13 @@ function Sidebar() {
                         </NavLink>
                     )}
 
-                    {/* Wallet - visible seulement pour les investors
+                    {/* Wallet - visible seulement pour les investors */}
                     {isInvestor && (
                         <NavLink to="/wallet" className="nav-item">
                             <FiCreditCard />
                             <span>Wallet</span>
                         </NavLink>
-                    )} */}
+                    )}
                 </nav>
             </div>
 
