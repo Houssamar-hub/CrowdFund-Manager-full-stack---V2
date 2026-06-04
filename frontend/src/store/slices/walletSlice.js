@@ -1,45 +1,62 @@
-// src/redux/slices/walletSlice.js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../services/api';
 
-import { createSlice } from "@reduxjs/toolkit";
+export const fetchBalance = createAsyncThunk(
+  'wallet/fetchBalance',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/wallet/balance');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
+export const addFunds = createAsyncThunk(
+  'wallet/addFunds',
+  async (amount, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/wallet/add-funds', { amount });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
 
 const initialState = {
   balance: 0,
-  transactions: []
+  transactions: [],
+  isLoading: false,
+  error: null,
 };
 
 const walletSlice = createSlice({
-  name: "wallet",
+  name: 'wallet',
   initialState,
   reducers: {
-    deposit: (state, action) => {
-      const amount = action.payload;
-
-      state.balance += amount;
-
-      state.transactions.unshift({
-        id: Date.now(),
-        type: "DEPOSIT",
-        amount,
-        date: new Date().toISOString()
-      });
+    clearError: (state) => {
+      state.error = null;
     },
-
-    withdraw: (state, action) => {
-      const amount = action.payload;
-
-      if (state.balance >= amount) {
-        state.balance -= amount;
-
-        state.transactions.unshift({
-          id: Date.now(),
-          type: "WITHDRAW",
-          amount,
-          date: new Date().toISOString()
-        });
-      }
-    }
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBalance.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchBalance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.balance = action.payload.balance;
+      })
+      .addCase(fetchBalance.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(addFunds.fulfilled, (state, action) => {
+        state.balance = action.payload.balance;
+      });
+  },
 });
 
-export const { deposit, withdraw } = walletSlice.actions;
+export const { clearError } = walletSlice.actions;
 export default walletSlice.reducer;
