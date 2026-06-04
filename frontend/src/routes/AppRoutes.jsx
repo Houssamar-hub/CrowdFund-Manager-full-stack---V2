@@ -15,6 +15,7 @@ import Investors from "../UI/pages/Investors";
 import Login from "../UI/pages/Login";
 import Register from "../UI/pages/Register";
 import Wallet from "../UI/pages/Wallet";
+import WalletCard from "../UI/components/WalletCard";
 const PrivateRoute = ({ children }) => {
     const token = localStorage.getItem("token");
 
@@ -95,7 +96,7 @@ const AppRoutes = () => {
                         path="/wallet"
                         element={
                             <PrivateRoute>
-                                <Wallet />
+                                <WalletCard />
                             </PrivateRoute>
                         }
                     />
