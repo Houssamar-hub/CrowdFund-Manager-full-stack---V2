@@ -6,19 +6,18 @@ import {
     Navigate,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Sidebar from "../components/Sidebar";
-import Dashboard from "../pages/Dashboard";
-import Projects from "../pages/Projects";
-import CreateProject from "../pages/CreateProject";
-import ProjectDetails from "../pages/ProjectDetails";
-import Investors from "../pages/Investors";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-
+import Sidebar from "../UI/components/Sidebar";
+import Dashboard from "../UI/pages/Dashboard";
+import Projects from "../UI/pages/Projects";
+import CreateProject from "../UI/pages/CreateProject";
+import ProjectDetails from "../UI/pages/ProjectDetails";
+import Investors from "../UI/pages/Investors";
+import Login from "../UI/pages/Login";
+import Register from "../UI/pages/Register";
+import Wallet from "../UI/pages/Wallet";
+import WalletCard from "../UI/components/WalletCard";
 const PrivateRoute = ({ children }) => {
-
-    const token =
-        localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
         return <Navigate to="/login" replace />;
@@ -90,6 +89,14 @@ const AppRoutes = () => {
                         element={
                             <PrivateRoute>
                                 <Investors />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/wallet"
+                        element={
+                            <PrivateRoute>
+                                <WalletCard />
                             </PrivateRoute>
                         }
                     />

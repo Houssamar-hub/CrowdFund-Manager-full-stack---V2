@@ -7,7 +7,7 @@ import CreateProject from "./UI/pages/CreateProject";
 import ProjectDetails from "./UI/pages/ProjectDetails";
 import Investors from "./UI/pages/Investors";
 import Portfolio from "./UI/pages/Portfolio";
-// import Wallet from "./UI/pages/Wallet";
+import Wallet from "./UI/pages/Wallet";
 import Login from "./UI/pages/Login";
 import Register from "./UI/pages/Register";
 
@@ -109,10 +109,10 @@ function App() {
                                         path="/portfolio"
                                         element={<Portfolio />}
                                     />
-                                    {/* <Route
+                                    <Route
                                         path="/wallet"
                                         element={<Wallet />}
-                                    /> */}
+                                    />
 
                                     {/* 404 Page */}
                                     <Route
