@@ -1,21 +1,21 @@
-import api from './api';
+import api from "./api";
 
 const projectService = {
   // Récupérer mes projets (pour owner)
   getMyProjects: async () => {
-    const response = await api.get('/projects/mine');
+    const response = await api.get("/projects/mine");
     return response.data;
   },
 
   // Récupérer les projets ouverts (pour investor)
   getOpenProjects: async () => {
-    const response = await api.get('/projects/open');
+    const response = await api.get("/projects/open");
     return response.data;
   },
 
   // Créer un projet
   createProject: async (projectData) => {
-    const response = await api.post('/projects', projectData);
+    const response = await api.post("/projects", projectData);
     return response.data;
   },
 
@@ -31,9 +31,9 @@ const projectService = {
     return response.data;
   },
 
-  // Supprimer un projet (admin seulement)
+  // Supprimer un projet (owner seulement)
   deleteProject: async (id) => {
-    const response = await api.delete(`/admin/projects/${id}`);
+    const response = await api.delete(`/projects/${id}`);
     return response.data;
   },
 

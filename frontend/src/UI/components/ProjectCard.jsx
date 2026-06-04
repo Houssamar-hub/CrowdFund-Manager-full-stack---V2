@@ -1,27 +1,61 @@
-import { useNavigate } from 'react-router-dom';
-import { Eye, DollarSign } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+import { Eye, DollarSign, Trash2 } from "lucide-react";
+import { useState } from "react";
+import projectService from "../../services/projectService";
 
-const ProjectCard = ({ project, userRole, onInvest }) => {
+const ProjectCard = ({ project, userRole, onInvest, onDelete }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
   const calculateProgress = () => {
-    const totalInvested = project.investments?.reduce((sum, inv) => sum + (inv.amount || 0), 0) || 0;
+    const totalInvested =
+      project.investments?.reduce((sum, inv) => sum + (inv.amount || 0), 0) ||
+      0;
     return (totalInvested / project.capital) * 100;
   };
 
   const getTotalInvested = () => {
-    return project.investments?.reduce((sum, inv) => sum + (inv.amount || 0), 0) || 0;
+    return (
+      project.investments?.reduce((sum, inv) => sum + (inv.amount || 0), 0) || 0
+    );
   };
 
   const progress = calculateProgress();
   const totalInvested = getTotalInvested();
 
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete "${project.title}"? This action cannot be undone.`,
+      )
+    ) {
+      try {
+        setIsDeleting(true);
+        await projectService.deleteProject(project._id);
+        if (onDelete) onDelete(project._id);
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        alert(
+          "Failed to delete project: " +
+            (error.response?.data?.message || error.message),
+        );
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
+
   return (
-    <div className="project-card" onClick={() => navigate(`/projects/${project._id}`)}>
+    <div
+      className="project-card"
+      onClick={() => navigate(`/projects/${project._id}`)}
+    >
       {/* TOP */}
       <div className="project-top">
         <h3 className="project-name">{project.title}</h3>
-        <span className={`project-status ${project.status === 'open' ? 'status-open' : 'status-closed'}`}>
+        <span
+          className={`project-status ${project.status === "open" ? "status-open" : "status-closed"}`}
+        >
           {project.status}
         </span>
       </div>
@@ -38,7 +72,10 @@ const ProjectCard = ({ project, userRole, onInvest }) => {
           <span>{progress.toFixed(1)}%</span>
         </div>
         <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${Math.min(progress, 100)}%` }} />
+          <div
+            className="progress-fill"
+            style={{ width: `${Math.min(progress, 100)}%` }}
+          />
         </div>
       </div>
 
@@ -50,7 +87,9 @@ const ProjectCard = ({ project, userRole, onInvest }) => {
         </div>
         <div>
           <p className="stat-label">Raised</p>
-          <p className="stat-value raised">{totalInvested.toLocaleString()} DH</p>
+          <p className="stat-value raised">
+            {totalInvested.toLocaleString()} DH
+          </p>
         </div>
       </div>
 
@@ -67,7 +106,7 @@ const ProjectCard = ({ project, userRole, onInvest }) => {
           View Details
         </button>
 
-        {userRole === 'investor' && project.status === 'open' && (
+        {userRole === "investor" && project.status === "open" && (
           <button
             className="action-btn invest-btn"
             onClick={(e) => {
@@ -77,6 +116,21 @@ const ProjectCard = ({ project, userRole, onInvest }) => {
           >
             <DollarSign size={16} />
             Invest Now
+          </button>
+        )}
+
+        {userRole === "owner" && (
+          <button
+            className="action-btn delete-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}
+            disabled={isDeleting}
+            title="Delete this project"
+          >
+            <Trash2 size={16} />
+            {isDeleting ? "Deleting..." : "Delete"}
           </button>
         )}
       </div>

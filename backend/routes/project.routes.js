@@ -19,7 +19,7 @@ router.get("/mine", protect, authorizeRoles("owner"), getMyProjects); // GET /pr
 router.get("/open", protect, getOpenProjects); // GET /projects/open - Projets ouverts
 router.get("/:id", protect, getProjectById); // GET /projects/:id - Détail projet
 router.put("/:id", protect, authorizeRoles("owner"), updateProject); // PUT /projects/:id - Modifier projet
-router.patch("/:id/close", authorizeRoles("owner"), protect, closeProject); // PATCH /projects/:id/close - Fermer projet
-router.delete("/:id", authorizeRoles("owner"), protect, deleteProject); // DELETE /projects/:id - Supprimer projet
+router.patch("/:id/close", protect, authorizeRoles("owner"), closeProject); // PATCH /projects/:id/close - Fermer projet
+router.delete("/:id", protect, authorizeRoles("owner"), deleteProject); // DELETE /projects/:id - Supprimer projet
 
 export default router;
