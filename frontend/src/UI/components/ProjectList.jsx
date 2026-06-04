@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { Search } from 'lucide-react';
-import ProjectCard from './ProjectCard';
+import { useState } from "react";
+import { Search } from "lucide-react";
+import ProjectCard from "./ProjectCard";
 
-const ProjectList = ({ projects, userRole, onInvest, isLoading }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const ProjectList = ({ projects, userRole, onInvest, onDelete, isLoading }) => {
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredProjects = projects?.filter(project =>
-    project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.description?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProjects = projects?.filter(
+    (project) =>
+      project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (isLoading) {
@@ -36,8 +37,11 @@ const ProjectList = ({ projects, userRole, onInvest, isLoading }) => {
       {!projects || projects.length === 0 ? (
         <div className="empty-state">
           <p>No projects found</p>
-          {userRole === 'owner' && (
-            <button className="create-first-btn" onClick={() => window.location.href = '/projects/create'}>
+          {userRole === "owner" && (
+            <button
+              className="create-first-btn"
+              onClick={() => (window.location.href = "/projects/create")}
+            >
               Create Your First Project
             </button>
           )}
@@ -54,6 +58,7 @@ const ProjectList = ({ projects, userRole, onInvest, isLoading }) => {
               project={project}
               userRole={userRole}
               onInvest={onInvest}
+              onDelete={onDelete}
             />
           ))}
         </div>

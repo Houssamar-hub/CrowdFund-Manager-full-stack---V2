@@ -59,6 +59,13 @@ const Projects = () => {
     setSelectedProject(null);
   };
 
+  const handleDeleteSuccess = () => {
+    // Refresh projects after deletion
+    if (user?.role === "owner") {
+      dispatch(fetchMyProjects());
+    }
+  };
+
   return (
     <div className="projects-page">
       {/* HEADER */}
@@ -83,6 +90,7 @@ const Projects = () => {
         projects={displayProjects}
         userRole={user?.role}
         onInvest={handleInvest}
+        onDelete={handleDeleteSuccess}
         isLoading={isLoading}
       />
 
