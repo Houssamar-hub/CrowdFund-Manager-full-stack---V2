@@ -1,12 +1,11 @@
 // src/pages/Wallet.jsx
 import "../../style/wallet.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addFunds } from "../../store/slices/walletSlice";
 
 function Wallet() {
   const dispatch = useDispatch();
-
   const balance = useSelector(
     (state) => state.wallet.balance
   );

@@ -10,7 +10,7 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentProject, isLoading } = useSelector((state) => state.projects);
-  const { userRole } = useSelector((state) => state.auth);
+  const userRole = useSelector((state) => state.auth.user?.role);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
 

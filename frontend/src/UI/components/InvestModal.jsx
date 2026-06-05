@@ -183,7 +183,7 @@ const InvestModal = ({ project, balance, onClose, onSuccess }) => {
                 Investment Amount <span className="required">*</span>
               </label>
               <div className="amount-wrapper">
-                <span className="currency">💰</span>
+                <span className="currency"></span>
                 <input
                   type="number"
                   value={amount}

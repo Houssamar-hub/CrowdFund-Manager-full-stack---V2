@@ -6,7 +6,6 @@ export const createProject = async (req, res) => {
   try {
     const { title, description, capital, maxInvestmentPercent } = req.body;
 
-    console.log("📝 Creating project for user:", req.user._id);
     console.log("Project data:", {
       title,
       description,
@@ -39,10 +38,8 @@ export const createProject = async (req, res) => {
       investments: [],
     });
 
-    console.log("✅ Project created successfully:", project._id);
     res.status(201).json(project);
   } catch (error) {
-    console.error("❌ Error creating project:", error);
     res.status(500).json({ message: error.message });
   }
 };
