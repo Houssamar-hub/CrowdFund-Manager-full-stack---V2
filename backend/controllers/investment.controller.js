@@ -6,6 +6,7 @@ import { User } from "../models/user.model.js";
 export const invest = async (req, res) => {
   try {
     const { amount, projectId } = req.body;
+    
     const investorId = req.user._id;
 
     const project = await Project.findById(projectId);
