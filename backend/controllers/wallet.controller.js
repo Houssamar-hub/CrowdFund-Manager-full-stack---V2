@@ -14,28 +14,41 @@ export const getBalance = async (req, res) => {
 export const addFunds = async (req, res) => {
   try {
     const { amount } = req.body;
-    
+
     if (!amount || amount <= 0) {
       return res.status(400).json({ message: "Invalid amount" });
     }
 
     const user = await User.findById(req.user._id);
     user.balance = (user.balance || 0) + amount;
+
+    // Add transaction to history
+    if (!user.transactions) {
+      user.transactions = [];
+    }
+    user.transactions.push({
+      type: "deposit",
+      amount: Number(amount),
+      description: "Wallet deposit",
+      createdAt: new Date(),
+    });
+
     await user.save();
 
     const transaction = {
-      amount,
       type: "deposit",
+      amount: Number(amount),
       createdAt: new Date(),
-      balance: user.balance
+      balance: user.balance,
     };
 
-    res.json({ 
-      message: "Funds added successfully", 
+    res.json({
+      message: "Funds added successfully",
       balance: user.balance,
-      transaction 
+      transaction,
     });
   } catch (error) {
+    console.error("Error adding funds:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -43,8 +56,17 @@ export const addFunds = async (req, res) => {
 // Récupérer l'historique
 export const getTransactions = async (req, res) => {
   try {
-    res.json([]);
+    const user = await User.findById(req.user._id);
+    const transactions = user.transactions || [];
+
+    // Sort by most recent first
+    const sortedTransactions = transactions.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    );
+
+    res.json(sortedTransactions);
   } catch (error) {
+    console.error("Error fetching transactions:", error);
     res.status(500).json({ message: error.message });
   }
 };
